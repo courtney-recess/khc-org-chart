@@ -3,953 +3,197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kraft Heinz — ABM Contact Org Chart</title>
+<title>KHC Contact Intelligence — Recess</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: #0F0F1A;
-    color: #E8E8F0;
-    min-height: 100vh;
-    padding: 40px;
-  }
-
-  .header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .header h1 {
-    font-size: 32px;
-    font-weight: 800;
-    color: #FFFFFF;
-    letter-spacing: -0.5px;
-  }
-
-  .header h1 span { color: #00BFA6; }
-
-  .header p {
-    color: #8888AA;
-    font-size: 14px;
-    margin-top: 8px;
-  }
-
-  .legend {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: #AAAACC;
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-
-  .tier-section {
-    margin-bottom: 40px;
-    position: relative;
-  }
-
-  .tier-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, #1A1A2E, #252540);
-    border: 1px solid #333355;
-    border-radius: 12px;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    font-weight: 700;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #00BFA6;
-  }
-
-  .tier-label .count {
-    background: #00BFA6;
-    color: #0F0F1A;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-  }
-
-  .cards-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .contact-card {
-    background: linear-gradient(145deg, #1A1A2E, #1E1E35);
-    border: 1px solid #2A2A44;
-    border-radius: 12px;
-    padding: 16px 20px;
-    min-width: 260px;
-    max-width: 320px;
-    flex: 1;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .contact-card:hover {
-    border-color: #00BFA6;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 191, 166, 0.1);
-  }
-
-  .contact-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    border-radius: 4px 0 0 4px;
-  }
-
-  .contact-card.hot::before { background: #FF6B6B; }
-  .contact-card.warm::before { background: #FFB347; }
-  .contact-card.cool::before { background: #5B9BD5; }
-  .contact-card.cold::before { background: #555577; }
-
-  .card-name {
-    font-weight: 700;
-    font-size: 15px;
-    color: #FFFFFF;
-    margin-bottom: 4px;
-  }
-
-  .card-title {
-    font-size: 12px;
-    color: #9999BB;
-    line-height: 1.4;
-    margin-bottom: 10px;
-  }
-
-  .card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .badge {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .badge.status-closed-won {
-    background: rgba(0, 191, 166, 0.15);
-    color: #00BFA6;
-    border: 1px solid rgba(0, 191, 166, 0.3);
-  }
-
-  .badge.status-sql {
-    background: rgba(255, 179, 71, 0.15);
-    color: #FFB347;
-    border: 1px solid rgba(255, 179, 71, 0.3);
-  }
-
-  .badge.status-connected {
-    background: rgba(91, 155, 213, 0.15);
-    color: #5B9BD5;
-    border: 1px solid rgba(91, 155, 213, 0.3);
-  }
-
-  .badge.status-nurture {
-    background: rgba(180, 130, 255, 0.15);
-    color: #B482FF;
-    border: 1px solid rgba(180, 130, 255, 0.3);
-  }
-
-  .badge.status-attempted {
-    background: rgba(136, 136, 170, 0.12);
-    color: #8888AA;
-    border: 1px solid rgba(136, 136, 170, 0.25);
-  }
-
-  .badge.status-new {
-    background: rgba(100, 100, 140, 0.12);
-    color: #7777AA;
-    border: 1px solid rgba(100, 100, 140, 0.25);
-  }
-
-  .badge.brand {
-    background: rgba(0, 191, 166, 0.1);
-    color: #00BFA6;
-    border: 1px solid rgba(0, 191, 166, 0.2);
-  }
-
-  .badge.brand-target {
-    background: rgba(0, 191, 166, 0.2);
-    color: #00E6C8;
-    border: 1px solid rgba(0, 191, 166, 0.4);
-  }
-
-  .badge.champion {
-    background: rgba(255, 215, 0, 0.15);
-    color: #FFD700;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-  }
-
-  .badge.engagement {
-    font-weight: 700;
-  }
-
-  .badge.eng-hot {
-    background: rgba(255, 107, 107, 0.15);
-    color: #FF6B6B;
-    border: 1px solid rgba(255, 107, 107, 0.3);
-  }
-
-  .badge.eng-warm {
-    background: rgba(255, 179, 71, 0.15);
-    color: #FFB347;
-    border: 1px solid rgba(255, 179, 71, 0.3);
-  }
-
-  .card-activity {
-    font-size: 11px;
-    color: #666688;
-    margin-top: 8px;
-  }
-
-  .connector-line {
-    border-left: 2px dashed #2A2A44;
-    margin-left: 24px;
-    height: 20px;
-  }
-
-  .gap-section {
-    margin-top: 40px;
-    background: linear-gradient(145deg, #1A1020, #1E1228);
-    border: 1px solid #3A2244;
-    border-radius: 16px;
-    padding: 28px 32px;
-  }
-
-  .gap-section h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #FF6B6B;
-    margin-bottom: 16px;
-  }
-
-  .gap-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    color: #CCAACC;
-    line-height: 1.5;
-  }
-
-  .gap-icon {
-    color: #FF6B6B;
-    font-size: 16px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .strategy-section {
-    margin-top: 40px;
-    background: linear-gradient(145deg, #101A20, #122028);
-    border: 1px solid #1A3344;
-    border-radius: 16px;
-    padding: 28px 32px;
-  }
-
-  .strategy-section h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #00BFA6;
-    margin-bottom: 16px;
-  }
-
-  .strategy-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    color: #99BBCC;
-    line-height: 1.5;
-  }
-
-  .strategy-icon {
-    color: #00BFA6;
-    font-size: 16px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .filter-bar {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-  }
-
-  .filter-btn {
-    background: #1A1A2E;
-    border: 1px solid #333355;
-    color: #8888AA;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .filter-btn:hover, .filter-btn.active {
-    background: #00BFA6;
-    color: #0F0F1A;
-    border-color: #00BFA6;
-  }
-
-  .hidden { display: none !important; }
-
-  .watermark {
-    text-align: center;
-    margin-top: 48px;
-    font-size: 11px;
-    color: #333355;
-  }
-
-  @media print {
-    body { background: #fff; color: #222; padding: 20px; }
-    .contact-card { background: #f8f8f8; border-color: #ddd; }
-    .card-name { color: #111; }
-    .card-title { color: #555; }
-    .tier-label { background: #eee; border-color: #ccc; color: #00897B; }
-    .filter-bar { display: none; }
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#0A0F1A; color:#E2E8F0; min-height:100vh; }
+  .header { background:linear-gradient(135deg,#0D1525 0%,#1A2540 100%); padding:32px 40px; border-bottom:3px solid #14B9D6; }
+  .header-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .logo { font-size:28px; font-weight:800; color:#14B9D6; letter-spacing:-0.5px; }
+  .logo span { color:#1FBBA6; }
+  .header h1 { font-size:22px; font-weight:600; color:#fff; }
+  .header p { font-size:13px; color:#94A3B8; margin-top:4px; }
+  .stats-bar { display:flex; gap:16px; padding:20px 40px; background:#0D1525; border-bottom:1px solid #1E293B; flex-wrap:wrap; }
+  .stat { background:#1A2540; border-radius:10px; padding:14px 20px; min-width:120px; text-align:center; border:1px solid #2D3A54; }
+  .stat .num { font-size:26px; font-weight:700; color:#14B9D6; }
+  .stat .label { font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+  .stat.hot .num { color:#DC2626; }
+  .stat.warm .num { color:#FF8900; }
+  .stat.won .num { color:#1FBBA6; }
+  .filters { padding:16px 40px; display:flex; gap:8px; flex-wrap:wrap; background:#0A0F1A; border-bottom:1px solid #1E293B; align-items:center; }
+  .filters label { font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.5px; margin-right:8px; }
+  .filter-btn { padding:6px 14px; border-radius:20px; border:1px solid #2D3A54; background:transparent; color:#94A3B8; font-size:12px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif; }
+  .filter-btn:hover { border-color:#14B9D6; color:#14B9D6; }
+  .filter-btn.active { background:#14B9D6; color:#0A0F1A; border-color:#14B9D6; font-weight:600; }
+  .filter-btn.eng { border-color:#FF8900; }
+  .filter-btn.eng.active { background:#FF8900; border-color:#FF8900; }
+  .divider { width:1px; height:24px; background:#2D3A54; margin:0 8px; }
+  .content { padding:24px 40px; }
+  .tier-section { margin-bottom:28px; }
+  .tier-header { font-size:15px; font-weight:700; color:#6C3FC5; margin-bottom:12px; padding:8px 16px; background:#1A2540; border-radius:8px; border-left:4px solid #6C3FC5; display:flex; justify-content:space-between; align-items:center; }
+  .tier-header .count { background:#6C3FC5; color:#fff; border-radius:12px; padding:2px 10px; font-size:12px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:12px; }
+  .card { background:#0D1525; border-radius:10px; padding:14px 16px; border:1px solid #2D3A54; position:relative; transition:all 0.2s; cursor:default; }
+  .card:hover { border-color:#14B9D6; transform:translateY(-1px); box-shadow:0 4px 12px rgba(20,185,214,0.1); }
+  .eng-bar { position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:10px 0 0 10px; }
+  .eng-bar.hot { background:#DC2626; }
+  .eng-bar.warm { background:#FF8900; }
+  .eng-bar.cool { background:#3B82F6; }
+  .eng-bar.cold { background:#475569; }
+  .card-name { font-size:14px; font-weight:600; color:#F1F5F9; margin-left:8px; }
+  .card-title { font-size:12px; color:#94A3B8; margin:4px 0 0 8px; line-height:1.4; }
+  .card-meta { display:flex; gap:8px; margin:8px 0 0 8px; flex-wrap:wrap; align-items:center; }
+  .badge { font-size:10px; padding:2px 8px; border-radius:10px; font-weight:600; }
+  .badge.status { border:1px solid #2D3A54; color:#94A3B8; }
+  .badge.closed-won { background:#1FBBA6; color:#0A0F1A; }
+  .badge.connected { background:#14B9D6; color:#0A0F1A; }
+  .badge.sql { background:#FF8900; color:#0A0F1A; }
+  .badge.nurture { background:#6C3FC5; color:#fff; }
+  .badge.brand { border:1px solid #6C3FC5; color:#A78BFA; }
+  .champion-badge { background:linear-gradient(135deg,#F59E0B,#D97706); color:#0A0F1A; font-size:10px; padding:2px 8px; border-radius:10px; font-weight:700; }
+  .card-activity { font-size:11px; color:#64748B; margin:6px 0 0 8px; }
+  .gaps-section { margin-top:36px; padding:24px; background:#1A2540; border-radius:12px; border:1px solid #2D3A54; }
+  .gaps-section h3 { font-size:16px; font-weight:700; color:#DC2626; margin-bottom:16px; }
+  .gap-item { padding:10px 16px; background:#0D1525; border-radius:8px; margin-bottom:8px; border-left:3px solid #DC2626; font-size:13px; color:#CBD5E1; }
+  .gap-item strong { color:#FF8900; }
+  .moves-section { margin-top:24px; padding:24px; background:#1A2540; border-radius:12px; border:1px solid #2D3A54; }
+  .moves-section h3 { font-size:16px; font-weight:700; color:#1FBBA6; margin-bottom:16px; }
+  .move-item { padding:10px 16px; background:#0D1525; border-radius:8px; margin-bottom:8px; border-left:3px solid #1FBBA6; font-size:13px; color:#CBD5E1; display:flex; gap:10px; align-items:flex-start; }
+  .move-badge { font-size:10px; padding:2px 8px; border-radius:8px; font-weight:700; white-space:nowrap; flex-shrink:0; }
+  .move-badge.now { background:#DC2626; color:#fff; }
+  .move-badge.week { background:#FF8900; color:#0A0F1A; }
+  .move-badge.next { background:#14B9D6; color:#0A0F1A; }
+  .move-badge.ongoing { background:#6C3FC5; color:#fff; }
+  .legend { display:flex; gap:16px; padding:16px 40px; border-top:1px solid #1E293B; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:#94A3B8; }
+  .legend-dot { width:12px; height:12px; border-radius:3px; }
+  .search-box { padding:8px 40px 0; }
+  .search-box input { width:100%; max-width:400px; padding:8px 14px; border-radius:8px; border:1px solid #2D3A54; background:#1A2540; color:#E2E8F0; font-size:13px; font-family:'Inter',sans-serif; outline:none; }
+  .search-box input:focus { border-color:#14B9D6; }
+  .search-box input::placeholder { color:#64748B; }
 </style>
 </head>
 <body>
-
 <div class="header">
-  <h1>Kraft Heinz <span>ABM Contact Org Chart</span></h1>
-  <p>158 contacts mapped from HubSpot CRM — organized by seniority for land-and-expand strategy</p>
+  <div class="header-top">
+    <img src="data:image/png;base64,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" alt="Recess" style="height:36px;">
+    <div style="font-size:12px;color:#64748B;">Updated March 9, 2026</div>
+  </div>
+  <h1>Kraft Heinz Contact Intelligence</h1>
+  <p>226 contacts mapped by seniority, brand alignment & engagement — ABM execution view</p>
 </div>
-
+<div class="stats-bar" id="statsBar"></div>
+<div class="search-box"><input type="text" id="searchInput" placeholder="Search by name, title, or brand..."></div>
+<div class="filters">
+  <label>Filter:</label>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="champions">Champions</button>
+  <button class="filter-btn eng" data-filter="hot">Hot</button>
+  <button class="filter-btn eng" data-filter="warm">Warm</button>
+  <div class="divider"></div>
+  <label>Brand:</label>
+  <button class="filter-btn" data-filter="brand:Lunchables">Lunchables</button>
+  <button class="filter-btn" data-filter="brand:Capri Sun">Capri Sun</button>
+  <button class="filter-btn" data-filter="brand:Heinz">Heinz</button>
+  <button class="filter-btn" data-filter="brand:Kraft Mac & Cheese">KMC</button>
+  <button class="filter-btn" data-filter="brand:Oscar Mayer">Oscar Mayer</button>
+  <button class="filter-btn" data-filter="brand:Philadelphia">Philly</button>
+  <button class="filter-btn" data-filter="brand:Velveeta">Velveeta</button>
+  <button class="filter-btn" data-filter="brand:Omni/Shopper">Omni/Shopper</button>
+  <button class="filter-btn" data-filter="brand:eCommerce">eCommerce</button>
+  <button class="filter-btn" data-filter="brand:Innovation">Innovation</button>
+  <button class="filter-btn" data-filter="brand:Brand Comms">Brand Comms</button>
+  <button class="filter-btn" data-filter="brand:Frozen">Frozen</button>
+  <button class="filter-btn" data-filter="brand:Desserts">Desserts</button>
+</div>
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#FF6B6B"></div> Hot (recent activity + advanced status)</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#FFB347"></div> Warm (some engagement)</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#5B9BD5"></div> Cool (light engagement)</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#555577"></div> Cold (no activity)</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#FFD700"></div> Internal Champion</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div> Hot</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#FF8900"></div> Warm</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#3B82F6"></div> Cool</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#475569"></div> Cold</div>
+  <div class="legend-item"><span class="champion-badge">CHAMPION</span> Closed Won / Connected</div>
 </div>
-
-<div class="filter-bar">
-  <button class="filter-btn active" onclick="filterCards('all')">All Contacts</button>
-  <button class="filter-btn" onclick="filterCards('abm')">ABM Targets Only</button>
-  <button class="filter-btn" onclick="filterCards('hot')">Hot / Warm</button>
-  <button class="filter-btn" onclick="filterCards('lunchables')">Lunchables</button>
-  <button class="filter-btn" onclick="filterCards('caprisun')">Capri Sun</button>
-  <button class="filter-btn" onclick="filterCards('hydration')">Hydration / MiO</button>
-  <button class="filter-btn" onclick="filterCards('kmc')">Mac & Cheese</button>
-  <button class="filter-btn" onclick="filterCards('velveeta')">Velveeta</button>
-  <button class="filter-btn" onclick="filterCards('omni')">Omni/Shopper</button>
-</div>
-
-<!-- VP+ TIER -->
-<div class="tier-section">
-  <div class="tier-label">C-Suite & VP+ <span class="count">8</span></div>
-  <div class="cards-grid">
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Todd Kaplan</div>
-      <div class="card-title">Chief Marketing Officer, North America</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand">Cross-Brand</span>
-      </div>
-      <div class="card-activity">No activity — long-term executive target</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="hydration" data-engagement="cold">
-      <div class="card-name">Cory Sexson</div>
-      <div class="card-title">Vice President, Marketing — Hydration</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand-target">Hydration / MiO</span>
-      </div>
-      <div class="card-activity">No activity — priority VP target for MiO + Crystal Light</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="heinz" data-engagement="cool">
-      <div class="card-name">Nina Patel</div>
-      <div class="card-title">Vice President, Global Heinz Brand</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Heinz</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2025</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Matt Carpenter</div>
-      <div class="card-title">Vice President Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">General</span>
-      </div>
-      <div class="card-activity">Last activity: May 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Emily Kerschner</div>
-      <div class="card-title">VP of Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">General</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Vikramjeet Singh</div>
-      <div class="card-title">Vice President, Marketing & Strategy</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Strategy</span>
-      </div>
-      <div class="card-activity">Last activity: Mar 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Christine Cruz-Clarke</div>
-      <div class="card-title">VP Marketing Excellence</div>
-      <div class="card-meta">
-        <span class="badge" style="background:rgba(255,107,107,0.12);color:#FF6B6B;border:1px solid rgba(255,107,107,0.25)">Bad Data</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2025 — needs data cleanup</div>
-    </div>
-
-  </div>
-</div>
-
-<div class="connector-line"></div>
-
-<!-- HEAD / SR DIRECTOR TIER -->
-<div class="tier-section">
-  <div class="tier-label">Head / Senior Director <span class="count">10</span></div>
-  <div class="cards-grid">
-
-    <div class="contact-card hot" data-brands="kmc" data-engagement="hot">
-      <div class="card-name">Ashleigh Gibson</div>
-      <div class="card-title">Head of Marketing, Mac & Cheese</div>
-      <div class="card-meta">
-        <span class="badge status-closed-won">Closed Won</span>
-        <span class="badge champion">Champion</span>
-        <span class="badge brand-target">KMC</span>
-      </div>
-      <div class="card-activity">Last activity: Sep 2025 — internal champion for KMC programs</div>
-    </div>
-
-    <div class="contact-card hot" data-brands="omni" data-engagement="hot">
-      <div class="card-name">Brad Santanna</div>
-      <div class="card-title">Head of Omnichannel Sales & Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-connected">Connected</span>
-        <span class="badge eng-hot engagement">Hot</span>
-        <span class="badge brand">Omni</span>
-      </div>
-      <div class="card-activity">Last activity: Mar 4, 2026 — engage NOW, share landing page</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="velveeta" data-engagement="cold">
-      <div class="card-name">Anne Field</div>
-      <div class="card-title">Head, NA Brand Comms — Oscar Mayer, Philadelphia, Velveeta, Kraft</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">Velveeta</span>
-        <span class="badge brand">Multi-Brand</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Megan (Magnuson) Lang</div>
-      <div class="card-title">Global Head of Brand Comms & Creativity — Heinz</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand">Heinz Comms</span>
-      </div>
-      <div class="card-activity">No activity</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Whitney Shaw</div>
-      <div class="card-title">Head of Marketing Excellence</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Ashley Tople</div>
-      <div class="card-title">Head of Marketing, Easy Indulgent Desserts</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-      </div>
-      <div class="card-activity">Last activity: Mar 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Paul Armstrong</div>
-      <div class="card-title">Head Of Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Danielle Spikener</div>
-      <div class="card-title">Head of Inclusive Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-      </div>
-      <div class="card-activity">No activity</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Phillip Cobb</div>
-      <div class="card-title">Insights Head of Global Partnerships & Enterprise Shopper</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand">Insights</span>
-      </div>
-      <div class="card-activity">No activity</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Judy Anderson</div>
-      <div class="card-title">Head of Integrated Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-      </div>
-      <div class="card-activity">No activity</div>
-    </div>
-
-  </div>
-</div>
-
-<div class="connector-line"></div>
-
-<!-- DIRECTOR TIER -->
-<div class="tier-section">
-  <div class="tier-label">Director <span class="count">11</span></div>
-  <div class="cards-grid">
-
-    <div class="contact-card warm" data-brands="general" data-engagement="warm">
-      <div class="card-name">Samantha Mills</div>
-      <div class="card-title">Associate Director, Brand Communications</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge eng-warm engagement">Warm</span>
-      </div>
-      <div class="card-activity">Last activity: Jan 2026 — recent, re-engage</div>
-    </div>
-
-    <div class="contact-card warm" data-brands="omni" data-engagement="warm">
-      <div class="card-name">Melissa Bley</div>
-      <div class="card-title">Associate Director, Omni Shopper Marketing & eCommerce</div>
-      <div class="card-meta">
-        <span class="badge status-nurture">Nurture</span>
-        <span class="badge brand">Omni/Shopper</span>
-      </div>
-      <div class="card-activity">Last activity: Aug 2025</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Kristina Hannant</div>
-      <div class="card-title">Director of Marketing, Ready to Drink</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand">RTD</span>
-      </div>
-      <div class="card-activity">No activity — relevant for hydration play</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Kelsey Rice</div>
-      <div class="card-title">Marketing Director USA</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2025</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Kaitlin Roe</div>
-      <div class="card-title">Senior Director, Marketing — Heinz / Director, US Coffee</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Heinz</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Danielle Coopersmith</div>
-      <div class="card-title">Director, Marketing — Kraft</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Kraft</span>
-      </div>
-      <div class="card-activity">Last activity: Nov 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="omni" data-engagement="cold">
-      <div class="card-name">Laurel May</div>
-      <div class="card-title">Director, Omni Shopper Marketing — Walmart & Club</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Omni/Walmart</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Casey Turro</div>
-      <div class="card-title">Director of Brand Marketing — Ore-Ida</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-      </div>
-      <div class="card-activity">No activity</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">David Baker</div>
-      <div class="card-title">Associate Director, Marketing — Frozen Snacks</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Kathryn Cecchin</div>
-      <div class="card-title">Director, Marketing & Head, Disruptive Innovation — NA</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Innovation</span>
-      </div>
-      <div class="card-activity">Last activity: Mar 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="general" data-engagement="cold">
-      <div class="card-name">Lauren Gumbiner</div>
-      <div class="card-title">Associate Marketing Director — Jell-O and Baking</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-  </div>
-</div>
-
-<div class="connector-line"></div>
-
-<!-- SR BRAND MANAGER / SR MANAGER TIER -->
-<div class="tier-section">
-  <div class="tier-label">Senior Brand Manager / Senior Manager <span class="count">Key contacts</span></div>
-  <div class="cards-grid">
-
-    <div class="contact-card hot" data-brands="omni" data-engagement="hot">
-      <div class="card-name">Cate Campbell</div>
-      <div class="card-title">Sr. Manager — Omni Shopper Marketing</div>
-      <div class="card-meta">
-        <span class="badge status-sql">Sales Qualified</span>
-        <span class="badge eng-hot engagement">Hot</span>
-        <span class="badge brand">Omni</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2025 — close to conversion</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="lunchables" data-engagement="cool">
-      <div class="card-name">Alyssa Cicero</div>
-      <div class="card-title">Senior Brand Manager, Brand Comms — Lunchables</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">Lunchables</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="caprisun hydration" data-engagement="cold">
-      <div class="card-name">Jessica Barker</div>
-      <div class="card-title">Senior Brand Manager, Brand Comms — Capri Sun</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand-target">Capri Sun</span>
-      </div>
-      <div class="card-activity">No activity — needs LinkedIn connect</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="caprisun hydration" data-engagement="cold">
-      <div class="card-name">Erin Fitzgerald</div>
-      <div class="card-title">Senior Brand Manager — Capri Sun</div>
-      <div class="card-meta">
-        <span class="badge status-new">New</span>
-        <span class="badge brand-target">Capri Sun</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="kmc" data-engagement="cool">
-      <div class="card-name">Ashleigh Calderone</div>
-      <div class="card-title">Senior Brand Manager, Kraft Mac & Cheese</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">KMC</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-    <div class="contact-card warm" data-brands="general" data-engagement="warm">
-      <div class="card-name">Sarthak Sahney</div>
-      <div class="card-title">Senior Brand Manager</div>
-      <div class="card-meta">
-        <span class="badge status-nurture">Nurture</span>
-      </div>
-      <div class="card-activity">Last activity: Apr 2025</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="omni" data-engagement="cool">
-      <div class="card-name">Bridget Andrese</div>
-      <div class="card-title">Senior Manager, Omni Shopper Marketing — Walmart</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand">Omni/Walmart</span>
-      </div>
-      <div class="card-activity">Last activity: Oct 2023</div>
-    </div>
-
-    <div class="contact-card cold" data-brands="caprisun hydration" data-engagement="cold">
-      <div class="card-name">Shaydon Armstrong</div>
-      <div class="card-title">Sr. Brand Manager Brand Comms — Capri Sun & MiO</div>
-      <div class="card-meta">
-        <span class="badge" style="background:rgba(255,107,107,0.12);color:#FF6B6B;border:1px solid rgba(255,107,107,0.25)">Bad Data</span>
-        <span class="badge brand-target">Capri Sun + MiO</span>
-      </div>
-      <div class="card-activity">Last activity: Dec 2023 — needs data cleanup</div>
-    </div>
-
-  </div>
-</div>
-
-<div class="connector-line"></div>
-
-<!-- BRAND MANAGER TIER -->
-<div class="tier-section">
-  <div class="tier-label">Brand Manager <span class="count">Key contacts</span></div>
-  <div class="cards-grid">
-
-    <div class="contact-card hot" data-brands="lunchables" data-engagement="hot">
-      <div class="card-name">Abby Kalsto</div>
-      <div class="card-title">Brand Manager (Lunchables)</div>
-      <div class="card-meta">
-        <span class="badge status-closed-won">Closed Won</span>
-        <span class="badge champion">Champion</span>
-        <span class="badge brand-target">Lunchables</span>
-      </div>
-      <div class="card-activity">Last activity: Feb 2026 — active champion, expansion conversations</div>
-    </div>
-
-    <div class="contact-card hot" data-brands="heinz" data-engagement="hot">
-      <div class="card-name">Kerry Lange</div>
-      <div class="card-title">Brand Manager, Heinz — Away From Home</div>
-      <div class="card-meta">
-        <span class="badge status-sql">Sales Qualified</span>
-        <span class="badge eng-hot engagement">Hot</span>
-        <span class="badge brand">Heinz AFH</span>
-      </div>
-      <div class="card-activity">Last activity: Nov 2025 — close to conversion</div>
-    </div>
-
-    <div class="contact-card hot" data-brands="velveeta" data-engagement="hot">
-      <div class="card-name">Alison Casler</div>
-      <div class="card-title">Marketing Analyst — Velveeta</div>
-      <div class="card-meta">
-        <span class="badge status-closed-won">Closed Won</span>
-        <span class="badge brand-target">Velveeta</span>
-      </div>
-      <div class="card-activity">Last activity: Feb 2026 — validates Velveeta traction</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="lunchables" data-engagement="cool">
-      <div class="card-name">Christina Brown</div>
-      <div class="card-title">Brand Manager, Brand Comms — Lunchables</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">Lunchables</span>
-      </div>
-      <div class="card-activity">Last activity: Mar 2023</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="lunchables" data-engagement="cool">
-      <div class="card-name">Anna James</div>
-      <div class="card-title">Associate Brand Manager, Brand Comms — Lunchables</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">Lunchables</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="kmc" data-engagement="cool">
-      <div class="card-name">Victoria</div>
-      <div class="card-title">Brand Manager, Kraft Mac & Cheese Comms</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">KMC</span>
-      </div>
-      <div class="card-activity">Last activity: Jun 2023</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="hydration" data-engagement="cool">
-      <div class="card-name">Christina Brown</div>
-      <div class="card-title">Associate Brand Manager, Brand Comms — Snacking, Hydration & Dessert</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">Hydration</span>
-      </div>
-      <div class="card-activity">Last activity: Jul 2023</div>
-    </div>
-
-    <div class="contact-card cool" data-brands="lunchables" data-engagement="cool">
-      <div class="card-name">Abigail</div>
-      <div class="card-title">Associate Brand Manager — Lunchables</div>
-      <div class="card-meta">
-        <span class="badge status-attempted">Attempted</span>
-        <span class="badge brand-target">Lunchables</span>
-      </div>
-      <div class="card-activity">Last activity: May 2024</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- GAPS -->
-<div class="gap-section">
-  <h2>Gaps to Fill via LinkedIn Prospecting</h2>
-  <div class="gap-item">
-    <span class="gap-icon">&#9888;</span>
-    <span><strong>Kool-Aid:</strong> Zero contacts in HubSpot. Need Brand Manager + Sr Brand Manager via LinkedIn.</span>
-  </div>
-  <div class="gap-item">
-    <span class="gap-icon">&#9888;</span>
-    <span><strong>Crystal Light:</strong> Zero contacts in HubSpot. Need Brand Manager + Director level via LinkedIn.</span>
-  </div>
-  <div class="gap-item">
-    <span class="gap-icon">&#9888;</span>
-    <span><strong>MiO:</strong> Only 1 contact (Shaydon Armstrong) flagged as Bad Data. Need fresh contacts.</span>
-  </div>
-  <div class="gap-item">
-    <span class="gap-icon">&#9888;</span>
-    <span><strong>Capri Sun:</strong> 3 contacts but all last touched in 2023. Re-engage or find current brand holders.</span>
-  </div>
-  <div class="gap-item">
-    <span class="gap-icon">&#9888;</span>
-    <span><strong>VP Hydration:</strong> Cory Sexson identified but completely untouched. Priority LinkedIn connect.</span>
-  </div>
-</div>
-
-<!-- STRATEGY -->
-<div class="strategy-section">
-  <h2>Recommended Next Moves</h2>
-  <div class="strategy-item">
-    <span class="strategy-icon">&#10148;</span>
-    <span><strong>Brad Santanna</strong> is Connected as of last week — share landing page NOW via LinkedIn DM.</span>
-  </div>
-  <div class="strategy-item">
-    <span class="strategy-icon">&#10148;</span>
-    <span><strong>Ask Ashleigh Gibson</strong> (KMC champion) and <strong>Abby Kalsto</strong> (Lunchables champion) who the VP-level decision maker is for expanding across brands.</span>
-  </div>
-  <div class="strategy-item">
-    <span class="strategy-icon">&#10148;</span>
-    <span><strong>Cory Sexson</strong> (VP Hydration) — LinkedIn connect first (no message), then warm intro via champion.</span>
-  </div>
-  <div class="strategy-item">
-    <span class="strategy-icon">&#10148;</span>
-    <span><strong>Kerry Lange</strong> (Heinz AFH, SQL) and <strong>Cate Campbell</strong> (Omni, SQL) — both close to conversion. Move to proposal.</span>
-  </div>
-  <div class="strategy-item">
-    <span class="strategy-icon">&#10148;</span>
-    <span><strong>LinkedIn prospect</strong> for Kool-Aid, Crystal Light, and MiO brand managers. These are net-new and need the connect-first approach.</span>
-  </div>
-  <div class="strategy-item">
-    <span class="strategy-icon">&#10148;</span>
-    <span><strong>Walk prospects through the landing page</strong> instead of sending decks — per CEO direction. Lower friction for first touches.</span>
-  </div>
-</div>
-
-<div class="watermark">
-  Prepared by Recess &mdash; Kraft Heinz ABM Contact Intelligence &mdash; March 2026
-</div>
-
+<div class="content" id="content"></div>
 <script>
-function filterCards(filter) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-
-  document.querySelectorAll('.contact-card').forEach(card => {
-    const brands = (card.dataset.brands || '').toLowerCase();
-    const engagement = (card.dataset.engagement || '').toLowerCase();
-    let show = true;
-
-    if (filter === 'abm') {
-      show = brands.includes('lunchables') || brands.includes('caprisun') || brands.includes('hydration') || brands.includes('kmc') || brands.includes('velveeta');
-    } else if (filter === 'hot') {
-      show = engagement === 'hot' || engagement === 'warm';
-    } else if (filter === 'lunchables') {
-      show = brands.includes('lunchables');
-    } else if (filter === 'caprisun') {
-      show = brands.includes('caprisun');
-    } else if (filter === 'hydration') {
-      show = brands.includes('hydration');
-    } else if (filter === 'kmc') {
-      show = brands.includes('kmc');
-    } else if (filter === 'velveeta') {
-      show = brands.includes('velveeta');
-    } else if (filter === 'omni') {
-      show = brands.includes('omni');
-    }
-
-    card.classList.toggle('hidden', !show);
-  });
+const contacts = [{"name": "Todd Kaplan", "title": "Chief Marketing Office, North America", "tier": "C-Suite", "brands": [], "status": "Attempted To Contact", "engagement": "cool", "lastActivity": "2026-01-13", "owner": "Andy Cooper", "email": "todd.kaplan@kraftheinzcompany.com", "champion": false}, {"name": "Todd Kaplan", "title": "Chief Marketing Officer, North America", "tier": "C-Suite", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "todd.kaplan@kraftheinz.com", "champion": false}, {"name": "Alejandro Recio", "title": "Vice President of eCommerce Sales", "tier": "VP+", "brands": ["eCommerce", "Brand Comms"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-02-21", "owner": "Char Short", "email": "alejandro.reciosada@kraftheinzcompany.com", "champion": false}, {"name": "Andrea Steele", "title": "Area Vice President, eCommerce & Customer Marketing", "tier": "VP+", "brands": ["eCommerce", "Brand Comms"], "status": "New", "engagement": "warm", "lastActivity": "2026-03-04", "owner": "Katie Olmstead", "email": "andrea.steele@kraftheinz.com", "champion": false}, {"name": "Christine Cruz-Clarke", "title": "VP Marketing Excellence", "tier": "VP+", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2025-06-03", "owner": "Andy Cooper", "email": "christine.cruz-clarke@kraftfoods.com", "champion": false}, {"name": "Cory Sexson", "title": "Vice President, Marketing - Hydration ", "tier": "VP+", "brands": ["Hydration", "Brand Comms"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "cory.sexson@kraftheinz.com", "champion": false}, {"name": "Emily Kerschner", "title": "VP of Marketing", "tier": "VP+", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "emily.kerschner@kraftheinzcompany.com", "champion": false}, {"name": "Jenna Vondrasek", "title": "Customer Vice President - eCommerce and Customer Marketing", "tier": "VP+", "brands": ["eCommerce", "Brand Comms"], "status": "Connected", "engagement": "hot", "lastActivity": "2026-03-04", "owner": "Andy Cooper", "email": "jenna.vondrasek@kraftheinz.com", "champion": true}, {"name": "Matt Carpenter", "title": "Vice President Marketing", "tier": "VP+", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-05-16", "owner": "Andy Cooper", "email": "matthew.carpenter@kraftheinzcompany.com", "champion": false}, {"name": "Nina Patel", "title": "Vice President, Global Heinz Brand", "tier": "VP+", "brands": ["Heinz"], "status": "Attempted To Contact", "engagement": "cool", "lastActivity": "2025-06-06", "owner": "Andy Cooper", "email": "nina.patel@kraftheinzcompany.com", "champion": false}, {"name": "Vikramjeet Singh", "title": "Vice President, Marketing & Strategy", "tier": "VP+", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-03-16", "owner": "Andy Cooper", "email": "vikramjeet.singh@kraftheinzcompany.com", "champion": false}, {"name": "Anne Field", "title": "Head, North American Brand Communications - Oscar Mayer, Philadelphia, Velveeta, Kraft & Just Crack an Egg", "tier": "Head / Sr Director", "brands": ["Velveeta", "Oscar Mayer", "Philadelphia"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "anne.field@kraftheinz.com", "champion": false}, {"name": "Anne Field", "title": "Head of North American Brand Comms-Oscar Mayer, Philadelphia, Velveeta, Kraft, Just Crack an Egg", "tier": "Head / Sr Director", "brands": ["Velveeta", "Oscar Mayer", "Philadelphia"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-05-16", "owner": "Andy Cooper", "email": "anne.field@kraftheinzcompany.com", "champion": false}, {"name": "Ashleigh Gibson", "title": "Head of Marketing, Mac & Cheese", "tier": "Head / Sr Director", "brands": ["Kraft Mac & Cheese"], "status": "Closed Won", "engagement": "hot", "lastActivity": "2025-09-22", "owner": "Andy Cooper", "email": "ashleigh.gibson@kraftheinz.com", "champion": true}, {"name": "Ashley Tople", "title": "Head of Marketing, Easy Indulgent Desserts ", "tier": "Head / Sr Director", "brands": ["Desserts"], "status": "New", "engagement": "cold", "lastActivity": "2023-03-16", "owner": "Andy Cooper", "email": "ashley.tople@kraftheinzcompany.com", "champion": false}, {"name": "Brad Santanna", "title": "Head of Omnichannel Sales & Marketing", "tier": "Head / Sr Director", "brands": ["Omni/Shopper"], "status": "Connected", "engagement": "hot", "lastActivity": "2026-03-04", "owner": "Andy Cooper", "email": "brad.santanna@kraftheinz.com", "champion": true}, {"name": "Danielle Spikener", "title": "Head of Inclusive Marketing", "tier": "Head / Sr Director", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "danielle.spikener@kraftheinz.com", "champion": false}, {"name": "James Lawson", "title": "Head Of Marketing", "tier": "Head / Sr Director", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Char Short", "email": "james.lawson@kraftfoods.com", "champion": false}, {"name": "Judy Anderson", "title": "Head of Integrated Marketing", "tier": "Head / Sr Director", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "judy.anderson@kraftfoods.com", "champion": false}, {"name": "Kaitlin Roe", "title": "Senior Director, Marketing - Heinz", "tier": "Head / Sr Director", "brands": ["Heinz"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "kaitlin.roe@kraftheinz.com", "champion": false}, {"name": "Kathryn Cecchin", "title": "Director, Marketing  & Head, Disruptive Innovation - North America", "tier": "Head / Sr Director", "brands": ["Innovation"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-03-16", "owner": "Andy Cooper", "email": "kathryn.cecchin@kraftheinzcompany.com", "champion": false}, {"name": "Maddy Zingle", "title": "Senior Director of Brand Marketing, Pacifico and Victoria", "tier": "Head / Sr Director", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-05-22", "owner": "Andy Cooper", "email": "maddy.zingle@cbrands.com", "champion": false}, {"name": "Megan (Magnuson) Lang", "title": "Global Head of Brand Communications & Creativity - Heinz", "tier": "Head / Sr Director", "brands": ["Heinz"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "megan.magnuson@kraftheinz.com", "champion": false}, {"name": "Nick Guerten", "title": "Head, Trade & Customer Marketing - Away From Home", "tier": "Head / Sr Director", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Andy Cooper", "email": "nick.guerten@kraftheinzcompany.com", "champion": false}, {"name": "Paul Armstrong", "title": "Head Of Marketing", "tier": "Head / Sr Director", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "paul.armstrong@kraftfoods.com", "champion": false}, {"name": "Phillip Cobb", "title": "Insights Head of Global Partnerships & Enterprise Shopper", "tier": "Head / Sr Director", "brands": ["Omni/Shopper", "Brand Comms"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "phillip.cobb@kraftheinz.com", "champion": false}, {"name": "Traci Graziani", "title": "Head of Brand & Trade Marketing, Away From Home", "tier": "Head / Sr Director", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "traci.graziani@kraftheinz.com", "champion": false}, {"name": "Whitney Shaw", "title": "Head of Marketing Excellence", "tier": "Head / Sr Director", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "whitney.shaw@kraftheinzcompany.com", "champion": false}, {"name": "Casey Turro", "title": "Director of Brand Marketing - Ore-Ida", "tier": "Director", "brands": ["Ore-Ida"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "casey.turro@kraftheinz.com", "champion": false}, {"name": "Danielle Coopersmith", "title": "Director, Marketing- Kraft", "tier": "Director", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Andy Cooper", "email": "danielle.coopersmith@kraftheinz.com", "champion": false}, {"name": "Fatima Haider", "title": "Marketing Director", "tier": "Director", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "fatima.haider@kraftheinz.com", "champion": false}, {"name": "Jaycee Domino", "title": "Director of Marketing", "tier": "Director", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Char Short", "email": "domino.jaycee@kraftfoods.com", "champion": false}, {"name": "Jenna Thornton", "title": "Director of External Communications & PR, North American Brands", "tier": "Director", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "jenna.thornton@kraftheinz.com", "champion": false}, {"name": "Kaitlin Roe", "title": "Director, Marketing - US Coffee", "tier": "Director", "brands": ["Coffee"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "kaitlin.roe@kraftheinzcompany.com", "champion": false}, {"name": "Kelsey Rice", "title": "Marketing Director USA", "tier": "Director", "brands": [], "status": "Attempted To Contact", "engagement": "cool", "lastActivity": "2025-06-06", "owner": "Andy Cooper", "email": "kelsey.rice@kraftheinz.com", "champion": false}, {"name": "Kelsey Rice", "title": "Director, Oscar Mayer Brand Communications ", "tier": "Director", "brands": ["Oscar Mayer"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2022-11-15", "owner": "Andy Cooper", "email": "kelsey.rice@kraftheinzcompany.com", "champion": false}, {"name": "Kristina Hannant, MBA, MSIMC", "title": "Director of Marketing, Ready to Drink", "tier": "Director", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "kristina.hannant@kraftheinz.com", "champion": false}, {"name": "Laurel May", "title": "Director, Omni Shopper Marketing - Walmart & Club", "tier": "Director", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Andy Cooper", "email": "laurel.may@kraftheinzcompany.com", "champion": false}, {"name": "Randi Schwieger", "title": "Assoc. Director, eCommerce & Customer Marketing Ops", "tier": "Director", "brands": ["eCommerce"], "status": "Sales Qualified Lead", "engagement": "hot", "lastActivity": "2026-03-04", "owner": "Andy Cooper", "email": "randi.schwieger@kraftheinz.com", "champion": false}, {"name": "Samantha Hess", "title": "Director, Brand Communications", "tier": "Director", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2022-11-15", "owner": "Andy Cooper", "email": "samantha.hess@kraftheinzcompany.com", "champion": false}, {"name": "Ashley Delaney", "title": "Associate Director eCommerce & Omni Shopper Marketing", "tier": "Associate Director", "brands": ["Omni/Shopper", "eCommerce"], "status": "Bad data", "engagement": "cold", "lastActivity": "2024-07-09", "owner": "Char Short", "email": "ashley.delaney@kraftheinzcompany.com", "champion": false}, {"name": "Curtis Swartzendruber", "title": "Associate Director, Global eCommerce Tools & Capabilities ", "tier": "Associate Director", "brands": ["eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Char Short", "email": "curtis.swartzendruber@kraftheinzcompany.com", "champion": false}, {"name": "David Baker", "title": "Associate Director, Marketing | Frozen Snacks ", "tier": "Associate Director", "brands": ["Frozen"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-19", "owner": "Andy Cooper", "email": "david.baker@kraftheinz.com", "champion": false}, {"name": "Melissa B", "title": "Associate Director - Omni Shopper Marketing", "tier": "Associate Director", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "melissa.bley@kraftheinzcompany.com", "champion": false}, {"name": "Melissa Bley", "title": "Associate Director- Omni Shopper Marketing and eCommerce (Strategic Accounts and Channels)", "tier": "Associate Director", "brands": ["Omni/Shopper", "eCommerce"], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-08-25", "owner": "Andy Cooper", "email": "melissa.bley@kraftheinz.com", "champion": false}, {"name": "Samantha Mills", "title": "Associate Director, Brand Communications", "tier": "Associate Director", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cool", "lastActivity": "2026-01-13", "owner": "Andy Cooper", "email": "samantha.hess@kraftheinz.com", "champion": false}, {"name": "Samantha Smith", "title": "Associate Director - Global Disruptive Innovation, Core Brands", "tier": "Associate Director", "brands": ["Innovation"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Andy Cooper", "email": "samantha.smith@kraftheinz.com", "champion": false}, {"name": "Aishwarya (Ash) Varma", "title": "Senior Manager, Customer Marketing", "tier": "Sr Manager / Sr BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "aishwarya.varma@kraftheinzcompany.com", "champion": false}, {"name": "Alex Turley", "title": "Sr. Manager, eCommerce - Last Mile", "tier": "Sr Manager / Sr BM", "brands": ["eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Char Short", "email": "alex.turley@kraftheinzcompany.com", "champion": false}, {"name": "Alexa MBA", "title": "Sr Manager, Omni Shopper Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "alexa.pierropoulos@kraftheinz.com", "champion": false}, {"name": "Alexis Peck", "title": "Sr. Manager, Omni Shopper Marketing - Target", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-03-06", "owner": "Andy Cooper", "email": "alexis.peck@kraftheinzcompany.com", "champion": false}, {"name": "Ali Peltier", "title": "Sr. Manager Omni Shopper Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-09-09", "owner": "Andy Cooper", "email": "ali.peltier@kraftheinzcompany.com", "champion": false}, {"name": "Alyssa Cicero", "title": "Senior Brand Manager, Brand Communications - Lunchables", "tier": "Sr Manager / Sr BM", "brands": ["Lunchables"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "alyssa.cicero@kraftheinz.com", "champion": false}, {"name": "Amy Hammerschmidt", "title": "Senior Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Char Short", "email": "amy.hammerschmidt@kraftfoods.com", "champion": false}, {"name": "Andrew Lind", "title": "Senior Brand Manager, Innovation & Growth - Away from Home", "tier": "Sr Manager / Sr BM", "brands": ["Innovation"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "andrew.lind@kraftheinz.com", "champion": false}, {"name": "Ashleigh Calderone", "title": "Senior Brand Manager, Kraft Mac & Cheese", "tier": "Sr Manager / Sr BM", "brands": ["Kraft Mac & Cheese"], "status": "New", "engagement": "cold", "lastActivity": "2023-07-10", "owner": "Char Short", "email": "ashleigh.calderone@kraftheinz.com", "champion": false}, {"name": "Bridget Andrese", "title": "Sr Manager, Omni Shopper Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-09-09", "owner": "Char Short", "email": "bridget.mooney@kraftheinzcompany.com", "champion": false}, {"name": "Bridget Andrese", "title": "Senior Manager, Omni Shopper Marketing - Walmart", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-10-25", "owner": "Andy Cooper", "email": "bridget.mooney@kraftheinz.com", "champion": false}, {"name": "Carrie Bertch", "title": "Senior Brand Manager - Agile Disruptive Innovation", "tier": "Sr Manager / Sr BM", "brands": ["Innovation"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "carrie.bertch@kraftheinz.com", "champion": false}, {"name": "Cassandra Sombeck", "title": "Senior Manager, Global eCommerce Capabilities", "tier": "Sr Manager / Sr BM", "brands": ["eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-10-03", "owner": "Char Short", "email": "cassandra.jensen@kraftheinzcompany.com", "champion": false}, {"name": "Cate Campbell", "title": "Sr. Manager - Omni Shopper Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Sales Qualified Lead", "engagement": "warm", "lastActivity": "2025-06-06", "owner": "Andy Cooper", "email": "catherine.campbell@kraftheinz.com", "champion": false}, {"name": "Celina Pedrosa", "title": "Senior Manager - eCommerce Sales", "tier": "Sr Manager / Sr BM", "brands": ["eCommerce"], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Char Short", "email": "celina.pedrosa@kraftheinzcompany.com", "champion": false}, {"name": "Chiara Calcagnini", "title": "Sr Manager, Customer Marketing - National Distribution and Street", "tier": "Sr Manager / Sr BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "chiara.calcagnini@kraftheinz.com", "champion": false}, {"name": "Chlo\u00e9 SCHILTZ", "title": "Senior Brand Manager [Nordics Region - Retail & Foodservice] ", "tier": "Sr Manager / Sr BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-12", "owner": "Andy Cooper", "email": "chlo\u00e9.schiltz@kraftheinz.com", "champion": false}, {"name": "Danielle Watts", "title": "Senior Brand Manager, The Kraft Heinz Not Company", "tier": "Sr Manager / Sr BM", "brands": ["Heinz"], "status": "Bad data", "engagement": "cold", "lastActivity": "2025-04-15", "owner": "Andy Cooper", "email": "danielle.watts@kraftheinzcompany.com", "champion": false}, {"name": "Dominique Robinson", "title": "Sr. Brand Manager, Inclusive Marketing", "tier": "Sr Manager / Sr BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "dominique.robinson@kraftheinz.com", "champion": false}, {"name": "Erin Fitzgerald", "title": "Senior Brand Manager- Capri Sun", "tier": "Sr Manager / Sr BM", "brands": ["Capri Sun"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-06-26", "owner": "Andy Cooper", "email": "erin.fitzgerald@kraftheinz.com", "champion": false}, {"name": "Greg Buck", "title": "Senior Manager Omni Shopper Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "greg.buck@kraftheinz.com", "champion": false}, {"name": "Haley Hendel", "title": "Senior Manager, Business Unit Sales Strategy - Lunchables", "tier": "Sr Manager / Sr BM", "brands": ["Lunchables"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-09-14", "owner": "Andy Cooper", "email": "haley.hendel@kraftheinzcompany.com", "champion": false}, {"name": "Jackie Britva", "title": "Sr. Brand Manager, Brand Communications", "tier": "Sr Manager / Sr BM", "brands": ["Brand Comms"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "jackie.britva@kraftheinz.com", "champion": false}, {"name": "Jacqueline Salamack", "title": "Sr. Brand Manager - HEINZ Comms", "tier": "Sr Manager / Sr BM", "brands": ["Heinz"], "status": "New", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "jacqueline.salamack@kraftheinzcompany.com", "champion": false}, {"name": "Jessica Barker", "title": "Senior Brand Manager, Brand Communications - Capri Sun", "tier": "Sr Manager / Sr BM", "brands": ["Capri Sun"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "jessica.barker@kraftheinz.com", "champion": false}, {"name": "Jordan Mann", "title": "Senior Brand Manager, Easy Indulgent Desserts: Jet-Puffed and Cool Whip", "tier": "Sr Manager / Sr BM", "brands": ["Desserts"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "jordan.mann@kraftheinzcompany.com", "champion": false}, {"name": "Jordan Sands", "title": "Sr. Manager, Omni Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-10-03", "owner": "Andy Cooper", "email": "jordan.sands@kraftheinzcompany.com", "champion": false}, {"name": "Julia Ritchie", "title": "Senior Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "julia.ritchie@kraftheinzcompany.com", "champion": false}, {"name": "Kate Mitchell", "title": "Senior Manager, NA Brand PR & Media Relations", "tier": "Sr Manager / Sr BM", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "kate.mitchell@kraftheinz.com", "champion": false}, {"name": "Keenan White", "title": "Senior Brand Manager - Heinz Brand Communications", "tier": "Sr Manager / Sr BM", "brands": ["Heinz"], "status": "New", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "keenan.white@kraftheinzcompany.com", "champion": false}, {"name": "Kelly Webb", "title": "Senior Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "kelly.webb@kraftheinz.com", "champion": false}, {"name": "Kelsey Kolasa", "title": "Senior Brand Manager, Philadelphia Cream Cheese", "tier": "Sr Manager / Sr BM", "brands": ["Philadelphia"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "kelsey.payson@kraftheinz.com", "champion": false}, {"name": "Kimber Shray", "title": "Shopper Marketing, Senior Manager", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "shray.kimber@kraftfoods.com", "champion": false}, {"name": "Kristina (Clementi) Shoda, MBA", "title": "Senior Brand Manager, Taco Bell Retail Innovation", "tier": "Sr Manager / Sr BM", "brands": ["Innovation"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "kristina.shoda@kraftheinz.com", "champion": false}, {"name": "Kylea Pittrich", "title": "Senior Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "kylea.pittrich@kraftheinzcompany.com", "champion": false}, {"name": "Lee Corle", "title": "Senior Manager Omni Shopper Marketing", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "lee.peterson@kraftheinzcompany.com", "champion": false}, {"name": "Lexie Peck", "title": "Sr. Manager, Omni Shopper Marketing, Target", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Char Short", "email": "alexis.peck3@kraftheinz.com", "champion": false}, {"name": "Lizzie Bartek", "title": "Senior Brand Manager, Creative Capabilities", "tier": "Sr Manager / Sr BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "lizzie.bartek@kraftheinz.com", "champion": false}, {"name": "Lizzie Burkhart", "title": "Senior Manager, Omni Shopper Marketing - Kroger", "tier": "Sr Manager / Sr BM", "brands": ["Omni/Shopper"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "elizabeth.burkhart@kraftheinz.com", "champion": false}, {"name": "Marissa Farrer", "title": "Senior Manager - Marketing Procurement", "tier": "Sr Manager / Sr BM", "brands": ["Brand Comms"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "marissa.farrer@kraftheinz.com", "champion": false}, {"name": "Sarah Wawrzynski", "title": "Sr. Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "sarah.wawrzynski@kraftheinz.com", "champion": false}, {"name": "Sarthak Sahney", "title": "Senior Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-04-14", "owner": "Andy Cooper", "email": "sarthak.sahney@kraftheinzcompany.com", "champion": false}, {"name": "Shaydon Armstrong", "title": "Sr. Brand Manager Brand Communications - Capri Sun & Mio", "tier": "Sr Manager / Sr BM", "brands": ["Capri Sun", "MiO"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-12-06", "owner": "Andy Cooper", "email": "shaydon.armstrong@kraftheinz.com", "champion": false}, {"name": "Valerie Sokolova", "title": "Senior Brand Manager of Innovation & Taste Elevation", "tier": "Sr Manager / Sr BM", "brands": ["Innovation"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "valerie.sokolova@kraftheinz.com", "champion": false}, {"name": "Violeta Vukoje", "title": "Senior Brand Manager", "tier": "Sr Manager / Sr BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "violeta.vukoje@kraftheinz.com", "champion": false}, {"name": "Abby Kalsto", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Closed Won", "engagement": "hot", "lastActivity": "2026-02-06", "owner": "Andy Cooper", "email": "abigail.kalsto@kraftheinz.com", "champion": true}, {"name": "Abigail", "title": "Associate Brand Manager - Lunchables", "tier": "Manager / BM", "brands": ["Lunchables"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-05-15", "owner": "Andy Cooper", "email": "abigail@kraftheinzcompany.com", "champion": false}, {"name": "Abigail Kalsto", "title": "Brand Manager - Lunchables", "tier": "Manager / BM", "brands": ["Lunchables"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "abigail.kalsto@kraftheinzcompany.com", "champion": false}, {"name": "Abigail Mcclain", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "abigail.mcclain@kraftfoods.com", "champion": false}, {"name": "Alanna Miyajima", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "alanna.miyajima@kraftheinzcompany.com", "champion": false}, {"name": "Allie Johnson", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "allie.johnson@kraftheinz.com", "champion": false}, {"name": "Alonso Zorrilla Yep", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-06-09", "owner": "Char Short", "email": "alonso.zorrillayep@kraftheinz.com", "champion": false}, {"name": "Amreen Ahmad", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "amreen.ahmad@kraftheinz.com", "champion": false}, {"name": "Angela Joint", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Char Short", "email": "angela.joint@kraftfoods.com", "champion": false}, {"name": "Ann Smith", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "ann.smith@kraftfoods.com", "champion": false}, {"name": "Anna James", "title": "Associate Brand Manager, Brand Communications - Lunchables", "tier": "Manager / BM", "brands": ["Lunchables"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "anna.james@kraftheinz.com", "champion": false}, {"name": "Anne Rodriguez", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Char Short", "email": "anne.rodriguez@kraftfoods.com", "champion": false}, {"name": "Ashley Hall", "title": "Brand Manager - Heinz Innovation", "tier": "Manager / BM", "brands": ["Heinz"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "ashley.hall2@kraftheinz.com", "champion": false}, {"name": "Brandon Martin", "title": "Brand Manager - Recipe Cheese", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "warm", "lastActivity": "2026-02-17", "owner": "Andy Cooper", "email": "brandon.martin4@kraftheinz.com", "champion": false}, {"name": "Brianna Galvin", "title": "Brand Manager - Taste Elevation Emerging Brands", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "brianna.galvin@kraftheinz.com", "champion": false}, {"name": "Brianna Galvin", "title": "Brand Manager - Taste Elevation Established Brands", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "brianna.galvin@kraftheinzcompany.com", "champion": false}, {"name": "Bridget Manning", "title": "Brand Manager, Bagel Bites and TGI Friday's Frozen Snacks", "tier": "Manager / BM", "brands": ["Frozen"], "status": "New", "engagement": "cool", "lastActivity": "2025-06-09", "owner": "Andy Cooper", "email": "bridget.manning@kraftheinz.com", "champion": false}, {"name": "Brooke Berendzen", "title": "Associate Brand Manager - Frozen Snacks", "tier": "Manager / BM", "brands": ["Frozen"], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-11-04", "owner": "Andy Cooper", "email": "brooke.berendzen@kraftheinz.com", "champion": false}, {"name": "Brooke Naples", "title": "Product Marketing Manager, Digital Experience", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-06-09", "owner": "Andy Cooper", "email": "brooke.naples@kraftheinz.com", "champion": false}, {"name": "Carolina Alfero", "title": "Brand Manager, Innovation \u2013 Mac & Cheese at Kraft Heinz", "tier": "Manager / BM", "brands": ["Kraft Mac & Cheese", "Heinz"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "carolina.alfero@kraftheinzcompany.com", "champion": false}, {"name": "Caroline King", "title": "Brand Manager, Innovation - Heinz", "tier": "Manager / BM", "brands": ["Heinz"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-02-26", "owner": "Andy Cooper", "email": "caroline.king@conagrafoods.com", "champion": false}, {"name": "Caroline Sheehey", "title": "Brand Manager, Claussen Pickles", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "caroline.sheehey@kraftheinz.com", "champion": false}, {"name": "Charrae Priester", "title": "Innovation Brand Manager, Frozen Meals", "tier": "Manager / BM", "brands": ["Frozen"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-07-03", "owner": "Andy Cooper", "email": "charrae.priester@kraftheinz.com", "champion": false}, {"name": "Chris Levine", "title": "Brand Manager, Marketing - Away From Home", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "christopher.levine@kraftheinz.com", "champion": false}, {"name": "Christina Brown", "title": "Associate Brand Manager, Brand Communications - Snacking, Hydration, & Dessert", "tier": "Manager / BM", "brands": ["Hydration", "Desserts", "Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "christina.brown@kraftheinz.com", "champion": false}, {"name": "Christina Brown", "title": "Brand Manager, Brand Communications - Lunchables", "tier": "Manager / BM", "brands": ["Lunchables"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-03-14", "owner": "Andy Cooper", "email": "christina.brown@kraftheinzcompany.com", "champion": false}, {"name": "Cindy (Tzu-Hsin) Kuo", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "cindy.kuo@kraftheinz.com", "champion": false}, {"name": "Colleen", "title": "Manager Marketing Procurement", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-04-14", "owner": "Andy Cooper", "email": "colleen.donahugh@kraftheinzcompany.com", "champion": false}, {"name": "Colleen Casey", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "colleen.casey@kraftheinz.com", "champion": false}, {"name": "Conchita Linares", "title": "Brand Manager, Innovation - Philadelphia", "tier": "Manager / BM", "brands": ["Philadelphia"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "conchita.linares@kraftheinz.com", "champion": false}, {"name": "Cory Sutton", "title": "Brand Manager - Kraft Enhancers, A.1., Grey Poupon - AFH", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "cory.sutton@kraftheinzcompany.com", "champion": false}, {"name": "Daniel Renalds", "title": "Manager of Growth Marketing DTC", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "daniel.renalds@kraftfoods.com", "champion": false}, {"name": "Dawn Mercer", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "dawn.mercer@kraftfoods.com", "champion": false}, {"name": "Derek Fujii", "title": "Brand Manager, Innovation - EMMB", "tier": "Manager / BM", "brands": ["Innovation"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "derek.fujii@kraftheinz.com", "champion": false}, {"name": "Eduardo Salazar", "title": "Sr. Marketing Manager | Grouper Marketing Manager ", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "eduardo.dominguez@kraftheinz.com", "champion": false}, {"name": "Elizabeth Pearson", "title": "Manager - Marketing Procurement", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "New", "engagement": "cool", "lastActivity": "2025-10-14", "owner": "Andy Cooper", "email": "elizabeth.pearson@kraftheinz.com", "champion": false}, {"name": "Emily Bray", "title": "Manager, Customer Marketing - Amazon", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "emily.bray@kraftheinzcompany.com", "champion": false}, {"name": "Emily Violett", "title": "Manager, Brand - Frozen Snacks & Mini Meals", "tier": "Manager / BM", "brands": ["Frozen"], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "emily.violett@kraftheinzcompany.com", "champion": false}, {"name": "Frances Sabatier", "title": "Brand Manager, Brand Communications - Kraft", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "frances.sabatier@kraftheinzcompany.com", "champion": false}, {"name": "Gabriella Garza", "title": "Consumer Insights Marketing Manager - Breakfast & Kraft Singles & Just Crack an Egg", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Andy Cooper", "email": "gabriella.garza@kraftheinzcompany.com", "champion": false}, {"name": "Greg O'Neil", "title": "Brand Manager - Premium Coffee", "tier": "Manager / BM", "brands": ["Coffee", "Brand Comms"], "status": "Bad data", "engagement": "cold", "lastActivity": "2021-10-07", "owner": "Char Short", "email": "greg.oneil@kraftheinzcompany.com", "champion": false}, {"name": "Holland Robinson", "title": "Brand Manager - Portfolio Brands, Taste Elevation", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "holland.robinson@kraftheinz.com", "champion": false}, {"name": "Jamie Kockenmeister", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "jamie.kockenmeister@kraftheinz.com", "champion": false}, {"name": "Jeffrey", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Char Short", "email": "jo.jeffery@kraftheinzcompany.com", "champion": false}, {"name": "Jessica Lee", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "jessica.lee@kraftheinz.com", "champion": false}, {"name": "Johnny Berman", "title": "Associate Brand Manager, Frozen Meals", "tier": "Manager / BM", "brands": ["Frozen"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-05-15", "owner": "Char Short", "email": "johnny.berman@kraftheinz.com", "champion": false}, {"name": "Jon Anderson", "title": "Senior Sales Manager, Ecommerce & Omnichannel Marketing", "tier": "Manager / BM", "brands": ["Omni/Shopper", "eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "jon.anderson@kraftheinzcompany.com", "champion": false}, {"name": "Joomi Lee", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2024-06-26", "owner": "Char Short", "email": "joomi.lee@kraftheinz.com", "champion": false}, {"name": "Jordan Sands", "title": "Brand Manager, Oscar Mayer Bacon", "tier": "Manager / BM", "brands": ["Oscar Mayer"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-09-09", "owner": "Andy Cooper", "email": "jordan.sands@kraftheinz.com", "champion": false}, {"name": "Joseph Curtin", "title": "Senior Customer Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "joseph.curtin@kraftheinzcompany.com", "champion": false}, {"name": "Julia Martinez", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "julia.martinez@kraftfoods.com", "champion": false}, {"name": "Julieanne Akwari", "title": "Brand Manager, Desserts", "tier": "Manager / BM", "brands": ["Desserts"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "julieanne.akwari@kraftheinz.com", "champion": false}, {"name": "Kaitlin Kocsis", "title": "Associate Brand Manager, Brand Communications ", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Andy Cooper", "email": "kaitlin.kocsis@kraftheinz.com", "champion": false}, {"name": "Kathryn Cannon", "title": "Associate Brand Manager - Philadelphia Cream Cheese", "tier": "Manager / BM", "brands": ["Philadelphia"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Char Short", "email": "kathryn.cannon@kraftfoods.com", "champion": false}, {"name": "Katlyn Hochstein", "title": "Brand Manager - Frozen Innovation", "tier": "Manager / BM", "brands": ["Frozen"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "katlyn.hochstein@kraftheinz.com", "champion": false}, {"name": "Kelly Frentzel", "title": "Brand Manager - Philadelphia Cream Cheese Away-from-Home", "tier": "Manager / BM", "brands": ["Philadelphia"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "kelly.frentzel@kraftheinz.com", "champion": false}, {"name": "Kelly Webb", "title": "Brand Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "kelly.webb@kraftheinzcompany.com", "champion": false}, {"name": "Kendra Castillo, CPA", "title": "Manager, Marketing Accounting", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "kendra.castillo@kraftheinzcompany.com", "champion": false}, {"name": "Kerry Lange", "title": "Brand Manager, Heinz - Away From Home", "tier": "Manager / BM", "brands": ["Heinz"], "status": "Sales Qualified Lead", "engagement": "warm", "lastActivity": "2025-11-04", "owner": "Andy Cooper", "email": "kerry.lange@kraftheinz.com", "champion": false}, {"name": "Laree Rolley", "title": "Associate Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-09", "owner": "Char Short", "email": "rolley.laree@kraftfoods.com", "champion": false}, {"name": "Laura Flynn", "title": "Assistant Manager - Shopper Marketing ", "tier": "Manager / BM", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "laura.flynn@kraftheinz.com", "champion": false}, {"name": "Lauren Devine", "title": "Manager, eCommerce Marketing - Performance & Retail Media", "tier": "Manager / BM", "brands": ["eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "lauren.devine@kraftheinzcompany.com", "champion": false}, {"name": "Lauren Paley", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-05-15", "owner": "Andy Cooper", "email": "lauren.paley@kraftheinz.com", "champion": false}, {"name": "Lauren Pardun", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "lauren.pardun@kraftfoods.com", "champion": false}, {"name": "Lauren Virkelyst", "title": "Manager, Omni Marketing - Amazon", "tier": "Manager / BM", "brands": ["Omni/Shopper"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "lauren.virkelyst@kraftheinz.com", "champion": false}, {"name": "Linda Sanchez", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "linda.sanchez@kraftfoods.com", "champion": false}, {"name": "Lindsay Davis", "title": "Brand Manager, Frozen Meals", "tier": "Manager / BM", "brands": ["Frozen"], "status": "Closed Won", "engagement": "hot", "lastActivity": "2025-10-23", "owner": "Char Short", "email": "lindsay.davis@kraftheinz.com", "champion": true}, {"name": "Lindsay Perry, PMP", "title": "Brand Manager, Innovation - Primal Kitchen", "tier": "Manager / BM", "brands": ["Primal Kitchen"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "lindsay.perry@kraftheinz.com", "champion": false}, {"name": "Lizzy Goodman", "title": "Brand Manager - Claussen", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "lizzy.goodman@kraftheinzcompany.com", "champion": false}, {"name": "Maddie Sosna", "title": "Brand Manager, Snacking Innovation", "tier": "Manager / BM", "brands": ["Innovation"], "status": "Attempted To Contact", "engagement": "cool", "lastActivity": "2025-03-19", "owner": "Andy Cooper", "email": "maddie.sosna@kraftheinz.com", "champion": false}, {"name": "Maddy Gildersleeve", "title": "Brand Manager, Wellness", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Andy Cooper", "email": "maddy.gildersleeve@kraftheinz.com", "champion": false}, {"name": "Maria Herrera", "title": "Associate Brand Manager, Communications - Philadelphia", "tier": "Manager / BM", "brands": ["Philadelphia"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "mherrera@kraftheinz.com", "champion": false}, {"name": "Maria Herrera Medina", "title": "Associate Brand Manager, Communications - Philadelphia", "tier": "Manager / BM", "brands": ["Philadelphia"], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-08-25", "owner": "Char Short", "email": "maria.herreramedina@kraftheinz.com", "champion": false}, {"name": "Mariana Lee", "title": "Associate Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "m.lee@kraftheinzcompany.com", "champion": false}, {"name": "Marlon W", "title": "Marketing Manager Shelf Stable", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "marlon.w@kraftfoods.com", "champion": false}, {"name": "Max Miller", "title": "Associate Brand Manager - Ketchup Marketing", "tier": "Manager / BM", "brands": ["Heinz"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "miller.max@kraftfoods.com", "champion": false}, {"name": "Megan Sommerdyke", "title": "Brand Manager, Oscar Mayer Cold Cuts", "tier": "Manager / BM", "brands": ["Oscar Mayer"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "megan.sommerdyke@kraftheinz.com", "champion": false}, {"name": "Melanie Bandari", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Char Short", "email": "melanie.bandari@kraftheinzcompany.com", "champion": false}, {"name": "Meredith Zingale", "title": "Brand Manager - Delimex", "tier": "Manager / BM", "brands": [], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-06-09", "owner": "Andy Cooper", "email": "meredith.zingale@kraftheinz.com", "champion": false}, {"name": "Mira Wolfe", "title": "Associate Brand Manager", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "mira.wolfe@kraftheinzcompany.com", "champion": false}, {"name": "Miranda Richards", "title": "Senior Account Manager, Omni Marketing & eCommerce", "tier": "Manager / BM", "brands": ["Omni/Shopper", "eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-10-03", "owner": "Andy Cooper", "email": "miranda.richards@kraftheinzcompany.com", "champion": false}, {"name": "Molle Twing", "title": "Sr. Experiential Marketing Manager, Oscar Mayer Wienermobile", "tier": "Manager / BM", "brands": ["Oscar Mayer"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "molle.klein@kraftheinz.com", "champion": false}, {"name": "Molle Twing", "title": "Brand Manager, Delimex ", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "molle.klein@kraftheinzcompany.com", "champion": false}, {"name": "Nicole Dempsey", "title": "Lead Manager, eCommerce Sales & Marketing, Amazon", "tier": "Manager / BM", "brands": ["eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Char Short", "email": "nicole.dempsey@kraftheinz.com", "champion": false}, {"name": "Olivia Carrington", "title": "Associate Brand Manager - Brand Communications", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "olivia.carrington@kraftheinz.com", "champion": false}, {"name": "Olivia Chapman", "title": "Associate Brand Manager - Brand Communications", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-02-23", "owner": "Andy Cooper", "email": "olivia.chapman@kraftheinzcompany.com", "champion": false}, {"name": "Olivia Krapfl", "title": "Manager, eCommerce Marketing - Performance & Retail Media", "tier": "Manager / BM", "brands": ["eCommerce"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "olivia.krapfl@kraftheinz.com", "champion": false}, {"name": "Priya Srinivasan", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Closed Won", "engagement": "hot", "lastActivity": "2026-03-03", "owner": "Andy Cooper", "email": "priya.srinivasan@kraftheinz.com", "champion": true}, {"name": "Rachel Abel", "title": "Brand Manager - Heinz", "tier": "Manager / BM", "brands": ["Heinz"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "rachel.abel@kraftheinz.com", "champion": false}, {"name": "Sarah Arlotto", "title": "Brand Manager - Heinz", "tier": "Manager / BM", "brands": ["Heinz"], "status": "New", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "sarah.arlotto@kraftheinzcompany.com", "champion": false}, {"name": "Sarah Chavez", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "sarah.chavez@kraftfoods.com", "champion": false}, {"name": "Sarah Datt", "title": "Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Char Short", "email": "datt.sarah@kraftfoods.com", "champion": false}, {"name": "Sarah Manley", "title": "Brand Manager - Classico", "tier": "Manager / BM", "brands": ["Classico"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "sarah.manley@kraftheinz.com", "champion": false}, {"name": "Sarah Melendez", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "sarah.melendez@kraftfoods.com", "champion": false}, {"name": "Simi Singh", "title": "Associate Brand Manager", "tier": "Manager / BM", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Char Short", "email": "simi.singh@kraftfoods.com", "champion": false}, {"name": "Stephanie Vance", "title": "Brand Manager, Brand Communications", "tier": "Manager / BM", "brands": ["Brand Comms"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Char Short", "email": "stephanie.vance@kraftfoods.com", "champion": false}, {"name": "Tallula Romany", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "romany.tallula@kraftheinz.com", "champion": false}, {"name": "Timothy Leonard", "title": "Brand Manager - Ready-to-Drink", "tier": "Manager / BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "timothy.leonard@kraftheinz.com", "champion": false}, {"name": "Valerie Klein", "title": "Marketing Manager", "tier": "Manager / BM", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "valerie.klein@kraftfoods.com", "champion": false}, {"name": "Victoria", "title": "Brand Manager, Kraft Mac & Cheese Comms", "tier": "Manager / BM", "brands": ["Kraft Mac & Cheese"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "l.victoria@kraftfoods.com", "champion": false}, {"name": "Ashley Paplow", "title": "Shopper Marketing Lead", "tier": "Lead", "brands": ["Omni/Shopper"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Char Short", "email": "paplow.ashley@kraftheinz.com", "champion": false}, {"name": "Caroline Furst", "title": "Lead - AFH Marketing | Chain Restaurants & C-Store", "tier": "Lead", "brands": [], "status": "Sales Qualified Lead", "engagement": "warm", "lastActivity": "2025-10-23", "owner": "Andy Cooper", "email": "caroline.furst@kraftheinz.com", "champion": false}, {"name": "Darin Snyder", "title": "Lead, Omni Marketing & eCommerce - GWA", "tier": "Lead", "brands": ["Omni/Shopper", "eCommerce"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2024-09-09", "owner": "Andy Cooper", "email": "darin.snyder@kraftheinzcompany.com", "champion": false}, {"name": "Erica Denoyer", "title": "Omni Marketing Planning & Execution Lead", "tier": "Lead", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-11-22", "owner": "Char Short", "email": "erica.denoyer@kraftheinzcompany.com", "champion": false}, {"name": "Jasleen Kaur", "title": "Lead eCommerce Sales", "tier": "Lead", "brands": ["eCommerce"], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-03-09", "owner": "Char Short", "email": "jasleen.kaur@kraftheinzcompany.com", "champion": false}, {"name": "Kevin Enos", "title": "Lead, Portfolio Marketing", "tier": "Lead", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-06", "owner": "Andy Cooper", "email": "kevin.enos@kraftheinz.com", "champion": false}, {"name": "Marisa Kolar", "title": "Marketing Operations Lead, The Kitchen", "tier": "Lead", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-05-18", "owner": "Andy Cooper", "email": "marisa.kolar@kraftheinzcompany.com", "champion": false}, {"name": "Matthew Reusing", "title": "Lead, Omni Shopper Marketing", "tier": "Lead", "brands": ["Omni/Shopper"], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-06-09", "owner": "Andy Cooper", "email": "matthew.reusing@kraftheinz.com", "champion": false}, {"name": "Megan Bentham-Campbell", "title": "OMNI Lead Shopper Experience Kraft Heinz", "tier": "Lead", "brands": ["Heinz"], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Jack Shannon", "email": "megan.bentham-campbell@kraftheinz.com", "champion": false}, {"name": "Meredith Murray", "title": "Lead, Product Marketing - Digital Brand Experiences ", "tier": "Lead", "brands": ["Brand Comms"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "meredith.murray@kraftheinz.com", "champion": false}, {"name": "Miranda MBA", "title": "Lead, Scale & Planning - eCommerce Sales, Grocery & Wholesale", "tier": "Lead", "brands": ["eCommerce"], "status": "New", "engagement": "cold", "lastActivity": "", "owner": "Andy Cooper", "email": "miranda.richards@kraftheinz.com", "champion": false}, {"name": "Nina Yundt", "title": "Lead, Omni Shopper Marketing", "tier": "Lead", "brands": ["Omni/Shopper"], "status": "Closed Won", "engagement": "hot", "lastActivity": "2025-07-18", "owner": "Andy Cooper", "email": "nina.yundt@kraftheinz.com", "champion": true}, {"name": "Shaina Fox", "title": "Lead, Marketing Excellence - Business Integration", "tier": "Lead", "brands": [], "status": "Nurture for Later", "engagement": "cool", "lastActivity": "2025-08-25", "owner": "Andy Cooper", "email": "shaina.fox@kraftheinz.com", "champion": false}, {"name": "Lauren Gumbiner", "title": "Associate Marketing Director- Jell-O and Baking Portfolio", "tier": "Associate BM", "brands": ["Jell-O"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-20", "owner": "Andy Cooper", "email": "lauren.gumbiner@kraftheinzcompany.com", "champion": false}, {"name": "todd.grauel@kraftheinz.com Grauel", "title": "Associate General Counsel - US Business and Brands", "tier": "Associate BM", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "2025-02-28", "owner": "Andy Cooper", "email": "todd.grauel@kraftheinz.com", "champion": false}, {"name": "Aleks Miletic", "title": "Analyst, eCom & Customer Marketing - ALB/GC", "tier": "Analyst", "brands": [], "status": "New", "engagement": "cool", "lastActivity": "2025-10-28", "owner": "Andy Cooper", "email": "aleksandar.miletic@kraftheinz.com", "champion": false}, {"name": "Alison Casler", "title": "Marketing Analyst - Velveeta", "tier": "Analyst", "brands": ["Velveeta"], "status": "Closed Won", "engagement": "hot", "lastActivity": "2026-02-17", "owner": "Andy Cooper", "email": "alison.casler@kraftheinz.com", "champion": true}, {"name": "Bill Ewell", "title": "Marketing Analyst", "tier": "Analyst", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "bill.ewell@kraftfoods.com", "champion": false}, {"name": "Evan Johnson", "title": "Senior Marketing Analyst", "tier": "Analyst", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2021-04-01", "owner": "Char Short", "email": "evan.johnson@kraftheinzcompany.com", "champion": false}, {"name": "Janani Appala", "title": "Marketing Analyst", "tier": "Analyst", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Char Short", "email": "janani.appala@kraftheinzcompany.com", "champion": false}, {"name": "Jayendra Balagopal", "title": "Senior Marketing Analyst - Consumer Insights", "tier": "Analyst", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "jayendra.balagopal@kraftheinzcompany.com", "champion": false}, {"name": "Kelsey Harper", "title": "Planning and Execution - Omni Marketing Analyst - Club", "tier": "Analyst", "brands": ["Omni/Shopper"], "status": "Attempted To Contact", "engagement": "cool", "lastActivity": "2025-05-29", "owner": "Andy Cooper", "email": "kelsey.harper@kraftheinz.com", "champion": false}, {"name": "Lauren Pietryga", "title": "Marketing Analyst", "tier": "Analyst", "brands": [], "status": "New", "engagement": "cold", "lastActivity": "2024-08-16", "owner": "Andy Cooper", "email": "lauren.pietryga@kraftheinz.com", "champion": false}, {"name": "Parker J", "title": "Senior Marketing Analyst", "tier": "Analyst", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Char Short", "email": "parker.j@kraftfoods.com", "champion": false}, {"name": "Piyush Biswas", "title": "Platform Marketing Analyst - Capri Sun", "tier": "Analyst", "brands": ["Capri Sun"], "status": "Bad data", "engagement": "cold", "lastActivity": "", "owner": "Char Short", "email": "piyush.biswas@kraftfoods.com", "champion": false}, {"name": "Susan Kixmoeller", "title": "Senior Marketing Analyst - Cups and Shapes", "tier": "Analyst", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-06-01", "owner": "Char Short", "email": "susan.kixmoeller@kraftheinzcompany.com", "champion": false}, {"name": "Tiffany B", "title": "Analyst - Marketing, Customer Engagement", "tier": "Analyst", "brands": [], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-06-15", "owner": "Andy Cooper", "email": "b.tiffany@kraftfoods.com", "champion": false}, {"name": "Carlos Chaves", "title": "Field Marketing Representative", "tier": "Other", "brands": ["Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "carlossc@kraftfoods.com", "champion": false}, {"name": "Carlos Soto", "title": "Field Marketing Representative", "tier": "Other", "brands": ["Brand Comms"], "status": "New", "engagement": "cold", "lastActivity": "2022-11-15", "owner": "Char Short", "email": "carlos.soto@kraftheinzcompany.com", "champion": false}, {"name": "Kate Peter", "title": "Marketing", "tier": "Other", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Char Short", "email": "kate.peter@kraftheinzcompany.com", "champion": false}, {"name": "Kayle Sant", "title": "Marketing", "tier": "Other", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Char Short", "email": "kayle.sant@kraftheinzcompany.com", "champion": false}, {"name": "Kelli Srivastava", "title": "Philadelphia Brand Communications", "tier": "Other", "brands": ["Philadelphia"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-25", "owner": "Andy Cooper", "email": "kelli.srivastava@kraftheinzcompany.com", "champion": false}, {"name": "Martha Toscano", "title": "Marketing Specialist", "tier": "Other", "brands": [], "status": "Bad data", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Char Short", "email": "martha.toscano@kraftheinzcompany.com", "champion": false}, {"name": "Samantha Lau", "title": "Brand & Product Marketing - Agile Disruptive Innovation", "tier": "Other", "brands": ["Innovation", "Brand Comms"], "status": "Attempted To Contact", "engagement": "cold", "lastActivity": "2023-07-24", "owner": "Andy Cooper", "email": "samantha.lau@kraftheinz.com", "champion": false}];
+const tierOrder = ["C-Suite", "VP+", "Head / Sr Director", "Director", "Associate Director", "Sr Manager / Sr BM", "Manager / BM", "Lead", "Associate BM", "Analyst", "Other", "Unknown"];
+function getStatusBadgeClass(s) {
+  if (s==='Closed Won') return 'closed-won';
+  if (s==='Connected') return 'connected';
+  if (s==='Sales Qualified Lead') return 'sql';
+  if (s==='Nurture for Later') return 'nurture';
+  return 'status';
 }
+function renderStats() {
+  const bar=document.getElementById('statsBar');
+  const t=contacts.length, hot=contacts.filter(c=>c.engagement==='hot').length,
+    warm=contacts.filter(c=>c.engagement==='warm').length,
+    won=contacts.filter(c=>c.status==='Closed Won').length,
+    conn=contacts.filter(c=>c.status==='Connected').length,
+    sql=contacts.filter(c=>c.status==='Sales Qualified Lead').length,
+    vp=contacts.filter(c=>['C-Suite','VP+'].includes(c.tier)).length,
+    heads=contacts.filter(c=>c.tier==='Head / Sr Director').length;
+  bar.innerHTML=`
+    <div class="stat"><div class="num">${t}</div><div class="label">Total Contacts</div></div>
+    <div class="stat won"><div class="num">${won}</div><div class="label">Closed Won</div></div>
+    <div class="stat"><div class="num" style="color:#14B9D6">${conn}</div><div class="label">Connected</div></div>
+    <div class="stat"><div class="num" style="color:#FF8900">${sql}</div><div class="label">SQLs</div></div>
+    <div class="stat hot"><div class="num">${hot}</div><div class="label">Hot</div></div>
+    <div class="stat warm"><div class="num">${warm}</div><div class="label">Warm</div></div>
+    <div class="stat"><div class="num" style="color:#6C3FC5">${vp}</div><div class="label">C-Suite / VP+</div></div>
+    <div class="stat"><div class="num" style="color:#6C3FC5">${heads}</div><div class="label">Heads / Sr Dir</div></div>`;
+}
+function renderContacts(filter,search) {
+  const content=document.getElementById('content');
+  let html='';
+  tierOrder.forEach(tier => {
+    let tc=contacts.filter(c=>c.tier===tier);
+    if(filter==='champions') tc=tc.filter(c=>c.champion);
+    else if(filter==='hot') tc=tc.filter(c=>c.engagement==='hot');
+    else if(filter==='warm') tc=tc.filter(c=>c.engagement==='warm');
+    else if(filter.startsWith('brand:')) { const b=filter.replace('brand:',''); tc=tc.filter(c=>c.brands.includes(b)); }
+    if(search) { const s=search.toLowerCase(); tc=tc.filter(c=>c.name.toLowerCase().includes(s)||c.title.toLowerCase().includes(s)||c.brands.some(b=>b.toLowerCase().includes(s))); }
+    if(tc.length===0) return;
+    html+=`<div class="tier-section"><div class="tier-header"><span>${tier}</span><span class="count">${tc.length}</span></div><div class="cards">`;
+    tc.forEach(c => {
+      const bb=c.brands.map(b=>`<span class="badge brand">${b}</span>`).join('');
+      const sc=getStatusBadgeClass(c.status);
+      const ch=c.champion?`<span class="champion-badge">CHAMPION</span>`:'';
+      html+=`<div class="card"><div class="eng-bar ${c.engagement}"></div><div class="card-name">${c.name} ${ch}</div><div class="card-title">${c.title}</div><div class="card-meta"><span class="badge ${sc}">${c.status}</span>${bb}</div><div class="card-activity">${c.lastActivity?'Last active: '+c.lastActivity:'No activity recorded'} · ${c.owner}</div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  html+=`
+  <div class="gaps-section"><h3>Coverage Gaps</h3>
+    <div class="gap-item"><strong>Kool-Aid:</strong> 0 contacts — critical gap for ABM target brand</div>
+    <div class="gap-item"><strong>Crystal Light:</strong> 0 contacts — needs LinkedIn/LeadIQ prospecting</div>
+    <div class="gap-item"><strong>MiO:</strong> Only 1 contact via combo role (Capri Sun & MiO) — thin coverage</div>
+    <div class="gap-item"><strong>Capri Sun:</strong> 2 contacts — need more depth, especially at Director+ level</div>
+    <div class="gap-item"><strong>Bad Data:</strong> 47 contacts need HubSpot cleanup (missing titles, wrong info)</div>
+    <div class="gap-item"><strong>Stale Contacts:</strong> Many last active in 2023 — need re-engagement campaign</div>
+    <div class="gap-item"><strong>Executive Coverage:</strong> Need more VP-level contacts for top-down sponsorship</div>
+  </div>
+  <div class="moves-section"><h3>Recommended Next Moves</h3>
+    <div class="move-item"><span class="move-badge now">NOW</span> Schedule touchpoint with Brad Santanna (Connected, active Mar 4) and Jenna Vondrasek (Customer VP, Connected)</div>
+    <div class="move-item"><span class="move-badge now">NOW</span> Advance SQLs: Randi Schwieger, Kerry Lange, Caroline Furst, Cate Campbell — move to demo/proposal</div>
+    <div class="move-item"><span class="move-badge week">THIS WEEK</span> Leverage 6 Closed Won champions (Ashleigh Gibson, Abby Kalsto, Priya Srinivasan, Nina Yundt, Lindsay Davis, Alison Casler) for VP-level intros</div>
+    <div class="move-item"><span class="move-badge week">THIS WEEK</span> Reach out to Todd Kaplan (CMO, North America) — highest-seniority contact, active Jan 2026</div>
+    <div class="move-item"><span class="move-badge next">NEXT</span> LeadIQ prospecting for Kool-Aid, Crystal Light, MiO brand managers</div>
+    <div class="move-item"><span class="move-badge next">NEXT</span> Clean up 47 "Bad Data" contacts in HubSpot</div>
+    <div class="move-item"><span class="move-badge ongoing">ONGOING</span> Re-engage stale 2023 contacts with Nurture sequence + relevant case studies</div>
+  </div>`;
+  content.innerHTML=html;
+}
+let currentFilter='all', currentSearch='';
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); currentFilter=btn.dataset.filter; renderContacts(currentFilter,currentSearch);
+  });
+});
+document.getElementById('searchInput').addEventListener('input',(e)=>{ currentSearch=e.target.value; renderContacts(currentFilter,currentSearch); });
+renderStats(); renderContacts('all','');
 </script>
-
 </body>
 </html>
